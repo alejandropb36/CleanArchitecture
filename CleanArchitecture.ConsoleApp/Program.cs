@@ -5,10 +5,26 @@ using Microsoft.EntityFrameworkCore;
 StreamerDbContext streamerDbContext = new();
 
 //await QueryFilter();
-await QueryMethods();
+//await QueryMethods();
+await QueryLinq();
 
 Console.WriteLine("Presiona cualquier tecla para termina");
 Console.ReadKey();
+
+async Task QueryLinq()
+{
+    Console.WriteLine($"Ingresa el servicio de streaming: ");
+
+    var streamerNombre = Console.ReadLine();
+    var streamers = await (from i in streamerDbContext.Streamers
+                           where EF.Functions.Like(i.Nombre, $"%{streamerNombre}%")
+                           select i).ToListAsync();
+
+    foreach(var streamer in streamers)
+    {
+        Console.WriteLine($"{streamer.Id} - {streamer.Nombre}");
+    }
+}
 
 async Task QueryMethods()
 {
@@ -46,8 +62,8 @@ async Task QueryFilter()
 
 //Streamer streamer = new()
 //{
-//    Nombre = "Amazon Prime",
-//    Url = "https://www.amazonprime.com"
+//    Nombre = "Disney",
+//    Url = "https://www.disney.com"
 //};
 
 //streamerDbContext!.Streamers!.Add(streamer);
