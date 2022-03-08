@@ -4,10 +4,24 @@ using Microsoft.EntityFrameworkCore;
 
 StreamerDbContext streamerDbContext = new();
 
-await QueryFilter();
+//await QueryFilter();
+await QueryMethods();
 
 Console.WriteLine("Presiona cualquier tecla para termina");
 Console.ReadKey();
+
+async Task QueryMethods()
+{
+    var streamer = streamerDbContext!.Streamers!;
+    var firstAsync = await streamer.Where(y => y.Nombre.Contains("a")).FirstAsync();
+    var whereFirstOrDefaultAsync = await streamer.Where(y => y.Nombre.Contains("a")).FirstOrDefaultAsync();
+    var firstOrDefaultAsync = await streamer.FirstOrDefaultAsync(y => y.Nombre.Contains("a"));
+
+    var singleAsync = await streamer.Where(x => x.Id == 1).SingleAsync();
+    var singleOrDefaultAsync = await streamer.Where(x => x.Id == 1).SingleOrDefaultAsync();
+    
+    var findAsync = await streamer.FindAsync(1);
+}
 
 async Task QueryFilter()
 {
