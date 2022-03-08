@@ -6,10 +6,26 @@ StreamerDbContext streamerDbContext = new();
 
 //await QueryFilter();
 //await QueryMethods();
-await QueryLinq();
+//await QueryLinq();
+await TrakingAndNoTraking();
+
 
 Console.WriteLine("Presiona cualquier tecla para termina");
 Console.ReadKey();
+
+async Task TrakingAndNoTraking()
+{
+    var streamerWithTraking = await streamerDbContext!.Streamers!.FirstOrDefaultAsync(x => x.Id == 1);
+
+    // Libera de memoria el objeto, es recomendable en querys en las cuales no se va a modificar los registros
+    var streamerWithNoTraking = await streamerDbContext!.Streamers!.AsNoTracking().FirstOrDefaultAsync(x => x.Id == 2);
+
+    streamerWithTraking.Nombre = "Netflix Super";
+    streamerWithNoTraking.Nombre = "Amazon Plus";
+
+    await streamerDbContext!.SaveChangesAsync();
+
+}
 
 async Task QueryLinq()
 {
@@ -60,40 +76,48 @@ async Task QueryFilter()
     }
 }
 
-//Streamer streamer = new()
-//{
-//    Nombre = "Disney",
-//    Url = "https://www.disney.com"
-//};
+async  Task AddStreamear()
+{
+    Streamer streamer = new()
+    {
+        Nombre = "Disney",
+        Url = "https://www.disney.com"
+    };
 
-//streamerDbContext!.Streamers!.Add(streamer);
+    streamerDbContext!.Streamers!.Add(streamer);
 
-//await streamerDbContext.SaveChangesAsync();
+    await streamerDbContext.SaveChangesAsync();
+}
 
-//var movies = new List<Video>()
-//{
-//    new Video()
-//    {
-//        Nombre = "Mad Max",
-//        StreamerId = streamer.Id
-//    },
-//    new Video()
-//    {
-//        Nombre = "Batman",
-//        StreamerId = streamer.Id
-//    },
-//    new Video()
-//    {
-//        Nombre = "Animales Fantasticos",
-//        StreamerId = streamer.Id
-//    },
-//    new Video()
-//    {
-//        Nombre = "Forest Gump",
-//        StreamerId = streamer.Id
-//    }
-//};
+async Task AddRangeVideos()
+{
+    var streamer = await streamerDbContext.Streamers.FindAsync(1);
 
-//await streamerDbContext.AddRangeAsync(movies);
+    var movies = new List<Video>()
+    {
+        new Video()
+        {
+            Nombre = "Mad Max",
+            StreamerId = streamer.Id
+        },
+        new Video()
+        {
+            Nombre = "Batman",
+            StreamerId = streamer.Id
+        },
+        new Video()
+        {
+            Nombre = "Animales Fantasticos",
+            StreamerId = streamer.Id
+        },
+        new Video()
+        {
+            Nombre = "Forest Gump",
+            StreamerId = streamer.Id
+        }
+    };
 
-//await streamerDbContext.SaveChangesAsync();
+    await streamerDbContext.AddRangeAsync(movies);
+
+    await streamerDbContext.SaveChangesAsync();
+}
