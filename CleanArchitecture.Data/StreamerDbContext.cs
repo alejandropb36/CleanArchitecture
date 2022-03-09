@@ -16,6 +16,16 @@ namespace CleanArchitecture.Data
             }
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Streamer>()
+                .HasMany(s => s.Videos)
+                .WithOne(v => v.Streamer)
+                .HasForeignKey(v => v.StreamerId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+        }
+
         public DbSet<Streamer>? Streamers { get; set; }
         public DbSet<Video>? Videos { get; set; }
     }
