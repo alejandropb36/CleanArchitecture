@@ -8,6 +8,7 @@ namespace CleanArchitecture.Domain
         public int StreamerId { get; set; }
         public virtual Streamer? Streamer { get; set; }
         public virtual ICollection<Actor> Actores { get; set; }
+        public virtual Director? Director { get; set; }
 
         public Video()
         {
