@@ -4,14 +4,82 @@ using Microsoft.EntityFrameworkCore;
 
 StreamerDbContext streamerDbContext = new();
 
-//await QueryFilter();
-//await QueryMethods();
+await AddNewDirectoWithVideo();
+//await AddNewActorWithVideo();
+//await AddNewStreamerWithVideoId();
+//await AddNewStreamerWithVideo();
+//await TrakingAndNoTraking();
 //await QueryLinq();
-await TrakingAndNoTraking();
+//await QueryMethods();
+//await QueryFilter();
 
 
 Console.WriteLine("Presiona cualquier tecla para termina");
 Console.ReadKey();
+
+async Task AddNewDirectoWithVideo()
+{
+    var director = new Director
+    {
+        Nombre = "Lorenzo",
+        Apellido = "Basteri",
+        VideoId = 1
+    };
+
+    await streamerDbContext.AddAsync(director);
+    await streamerDbContext.SaveChangesAsync();
+
+}
+
+async Task AddNewActorWithVideo()
+{
+    var actor = new Actor
+    {
+        Nombre = "Brad",
+        Apellido = "Pitt"
+    };
+    await streamerDbContext.AddAsync(actor);
+    await streamerDbContext.SaveChangesAsync();
+
+    var videoActor = new VideoActor
+    {
+        ActorId = actor.Id,
+        VideoId = 1
+    };
+
+    await streamerDbContext.AddAsync(videoActor);
+    await streamerDbContext.SaveChangesAsync();
+}
+
+async Task AddNewStreamerWithVideoId()
+{
+
+    var batmanForever= new Video
+    {
+        Nombre = "Batman Forever",
+        StreamerId =  1007
+    };
+
+    await streamerDbContext.AddAsync(batmanForever);
+    await streamerDbContext.SaveChangesAsync();
+}
+
+async Task AddNewStreamerWithVideo()
+{
+    var pantaya = new Streamer
+    {
+        Nombre = "Pantaya"
+    };
+
+    var hungerGames = new Video
+    {
+        Nombre = "Hunger Games",
+        Streamer = pantaya
+    };
+
+    await streamerDbContext.AddAsync(hungerGames);
+    await streamerDbContext.SaveChangesAsync();
+}
 
 async Task TrakingAndNoTraking()
 {
