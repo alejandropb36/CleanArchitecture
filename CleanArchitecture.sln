@@ -3,11 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.ConsoleApp", "CleanArchitecture.ConsoleApp\CleanArchitecture.ConsoleApp.csproj", "{898C921A-0E15-4EC0-BE10-A32B912F92D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.ConsoleApp", "CleanArchitecture.ConsoleApp\CleanArchitecture.ConsoleApp.csproj", "{898C921A-0E15-4EC0-BE10-A32B912F92D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Data", "CleanArchitecture.Data\CleanArchitecture.Data.csproj", "{59B28BCF-26D6-44F2-917E-BE0811F77E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Data", "CleanArchitecture.Data\CleanArchitecture.Data.csproj", "{59B28BCF-26D6-44F2-917E-BE0811F77E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchitecture.Domain", "CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{E8D41627-4612-46F8-9D17-F7BD4843828C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchitecture.Domain", "CleanArchitecture.Domain\CleanArchitecture.Domain.csproj", "{E8D41627-4612-46F8-9D17-F7BD4843828C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7E6CEAE6-E484-4A06-BC52-9C8E4C3CAE2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{5F082A6F-729D-4161-9B70-896AF73F4859}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{298C5CFA-9BDE-49EB-BDF1-67AF4FFB217A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{25BDA7A4-C859-475D-93B5-AD2D838C7D39}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{27C8BF5E-E5CB-418D-8253-846E582CB159}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestructure", "Infraestructure", "{4974A556-6FDC-4F30-ADD5-5CAE5AB84C92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Console", "Console", "{307C5FAF-063C-4566-9A2C-CB3C470531C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +44,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{898C921A-0E15-4EC0-BE10-A32B912F92D0} = {307C5FAF-063C-4566-9A2C-CB3C470531C9}
+		{59B28BCF-26D6-44F2-917E-BE0811F77E3A} = {4974A556-6FDC-4F30-ADD5-5CAE5AB84C92}
+		{E8D41627-4612-46F8-9D17-F7BD4843828C} = {27C8BF5E-E5CB-418D-8253-846E582CB159}
+		{25BDA7A4-C859-475D-93B5-AD2D838C7D39} = {7E6CEAE6-E484-4A06-BC52-9C8E4C3CAE2E}
+		{27C8BF5E-E5CB-418D-8253-846E582CB159} = {7E6CEAE6-E484-4A06-BC52-9C8E4C3CAE2E}
+		{4974A556-6FDC-4F30-ADD5-5CAE5AB84C92} = {7E6CEAE6-E484-4A06-BC52-9C8E4C3CAE2E}
+		{307C5FAF-063C-4566-9A2C-CB3C470531C9} = {7E6CEAE6-E484-4A06-BC52-9C8E4C3CAE2E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD1A774E-9C29-4C96-9471-76171A9B8E88}
