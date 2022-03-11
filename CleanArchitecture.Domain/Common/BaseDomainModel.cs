@@ -1,8 +1,12 @@
 ﻿
 namespace CleanArchitecture.Domain.Common
 {
-    public class BaseDomainModel
+    public abstract class BaseDomainModel
     {
         public int Id { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public string? CreatedBy { get; set; }
+        public DateTime? LasteModifiedDate { get; set; }
+        public string? LastModifiedBy { get; set; }
     }
 }
