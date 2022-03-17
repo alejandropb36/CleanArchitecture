@@ -10,7 +10,7 @@ namespace CleanArchitecture.Application.Mappings
         public MappingProfile()
         {
             CreateMap<Video, VideoVm>();
-            CreateMap<StreamerCommand, Streamer>();
+            CreateMap<CreateStreamerCommand, Streamer>();
         }
     }
 }
