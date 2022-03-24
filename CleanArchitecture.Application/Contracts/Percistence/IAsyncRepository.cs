@@ -7,13 +7,13 @@ namespace CleanArchitecture.Application.Contracts.Percistence
     {
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
-                                        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                        string includeString = null,
+        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null,
+                                        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+                                        string? includeString = null,
                                         bool disableTraking = true);
-        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> predicate = null,
-                                        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                        Expression<Func<T, object>> includes = null,
+        Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>>? predicate = null,
+                                        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+                                        List<Expression<Func<T, object>>>? includes = null,
                                         bool disableTraking = true);
         Task<T> GetByIdAsync(int id);
         Task<T> AddAsync(T entity);
