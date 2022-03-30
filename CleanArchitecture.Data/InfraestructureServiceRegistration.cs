@@ -14,8 +14,8 @@ namespace CleanArchitecture.Infraestructure
     {
         public static IServiceCollection AddInfraestructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<StreamerDbContext>(options => 
-                options.UseSqlServer(configuration.GetConnectionString("ConnectionStrings"))
+            services.AddDbContext<StreamerDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("ConnectionString"))
             );
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(RepositoryBase<>));

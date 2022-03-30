@@ -1,8 +1,8 @@
-﻿using CleanArchitecture.Data;
-using CleanArchitecture.Domain;
+﻿using CleanArchitecture.Domain;
+using CleanArchitecture.Infraestructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-StreamerDbContext dbContext = new();
+StreamerDbContext dbContext = null;
 
 await MultipleEntitiesQuery();
 //await AddNewDirectoWithVideo();

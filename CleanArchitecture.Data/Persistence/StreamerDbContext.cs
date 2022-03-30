@@ -31,17 +31,6 @@ namespace CleanArchitecture.Infraestructure.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Server=localhost;Database=Streamer;User Id=sa;Password=secret123;")
-        //            .LogTo(Console.WriteLine, new[] { DbLoggerCategory.Database.Command.Name }, LogLevel.Information)
-        //            .EnableSensitiveDataLogging();
-        //    }
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Streamer>()
