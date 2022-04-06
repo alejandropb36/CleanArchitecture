@@ -1,6 +1,7 @@
 ﻿using CleanArchitecture.API.Errors;
+using CleanArchitecture.Application.Exceptions;
+using Newtonsoft.Json;
 using System.Net;
-using System.Text.Json;
 
 namespace CleanArchitecture.API.Middlewares
 {
@@ -27,16 +28,33 @@ namespace CleanArchitecture.API.Middlewares
             {
                 _logger.LogError(ex, ex.Message);
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                var statusCode = (int)HttpStatusCode.InternalServerError;
+                var result = string.Empty;
 
-                var response = _environment.IsDevelopment()
-                    ? new CodeErrorException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace)
-                    : new CodeErrorException((int)HttpStatusCode.InternalServerError);
+                switch (ex)
+                {
+                    case NotFoundException notFoundException:
+                        statusCode = (int)HttpStatusCode.NotFound;
+                        break;
+                    case ValidationException validationException:
+                        statusCode = (int)HttpStatusCode.BadRequest;
+                        var validationJson = JsonConvert.SerializeObject(validationException.Errors);
+                        result = JsonConvert.SerializeObject(new CodeErrorException(statusCode, ex.Message, validationJson));
+                        break;
+                    case BadRequesException badRequesException:
+                        statusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    default:
+                        break;
+                }
 
-                var options = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-                var json = JsonSerializer.Serialize(response, options);
+                if (string.IsNullOrEmpty(result))
+                {
+                    result = JsonConvert.SerializeObject(new CodeErrorException(statusCode, ex.Message, ex.StackTrace));
+                }
+                context.Response.StatusCode = statusCode;
 
-                await context.Response.WriteAsync(json);
+                await context.Response.WriteAsync(result);
             }
         }
     }
