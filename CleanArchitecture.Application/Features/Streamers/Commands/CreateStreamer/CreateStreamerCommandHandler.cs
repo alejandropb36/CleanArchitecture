@@ -10,19 +10,19 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands
 {
     public class CreateStreamerCommandHandler : IRequestHandler<CreateStreamerCommand, int>
     {
-        private readonly IStreamerRepository _streamRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
         private readonly ILogger<CreateStreamerCommandHandler> _logger;
 
         public CreateStreamerCommandHandler(
-            IStreamerRepository streamRepository,
+            IUnitOfWork unitOfWork,
             IMapper mapper,
             IEmailService emailService,
             ILogger<CreateStreamerCommandHandler> logger
         )
         {
-            _streamRepository = streamRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             _emailService = emailService;
             _logger = logger;
@@ -32,12 +32,19 @@ namespace CleanArchitecture.Application.Features.Streamers.Commands
         {
             var streamerEntity = _mapper.Map<Streamer>(request);
 
-            var newStreamer = await _streamRepository.AddAsync(streamerEntity);
-            _logger.LogInformation($"Streamer {newStreamer.Id} fue creado exitosamente");
+            _unitOfWork.StreamerRepository.AddEntity(streamerEntity);
+            var result = await _unitOfWork.Complete();
 
-            await SendEmail(newStreamer);
+            if (result <= 0)
+            {
+                throw new Exception($"No se pudo insertar el record de streamer");
+            }
 
-            return newStreamer.Id;
+            _logger.LogInformation($"Streamer {streamerEntity.Id} fue creado exitosamente");
+
+            await SendEmail(streamerEntity);
+
+            return streamerEntity.Id;
         }
 
         private async Task SendEmail(Streamer streamer)

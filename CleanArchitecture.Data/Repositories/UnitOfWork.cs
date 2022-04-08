@@ -10,6 +10,12 @@ namespace CleanArchitecture.Infraestructure.Repositories
         private Hashtable _repositories;
         private readonly StreamerDbContext _context;
 
+        private IStreamerRepository _streamerRepository;
+        private IVideoRepository _videoRepository;
+
+        public IStreamerRepository StreamerRepository => _streamerRepository ??= new StreamerRepository(_context);
+        public IVideoRepository VideoRepository => _videoRepository ??= new VideoRepository(_context);
+
         public UnitOfWork(StreamerDbContext context)
         {
             _context = context;
