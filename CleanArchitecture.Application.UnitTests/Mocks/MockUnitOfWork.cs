@@ -1,16 +1,24 @@
-﻿using CleanArchitecture.Application.Contracts.Percistence;
+﻿using CleanArchitecture.Infraestructure.Persistence;
+using CleanArchitecture.Infraestructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace CleanArchitecture.Application.UnitTests.Mocks
 {
     public static class MockUnitOfWork
     {
-        public static Mock<IUnitOfWork> GetUnitOfWork()
+        public static Mock<UnitOfWork> GetUnitOfWork()
         {
-            var mockUnitOfWork = new Mock<IUnitOfWork>();
-            var mockVideoRepository = MockVideoRepository.GetVideoRepository();
+            var options = new DbContextOptionsBuilder<StreamerDbContext>()
+                .UseInMemoryDatabase(databaseName: $"StreamerDbContext-{Guid.NewGuid()}")
+                .Options;
 
-            mockUnitOfWork.Setup(r => r.VideoRepository).Returns(mockVideoRepository.Object);
+            var streamerDbContextFake = new StreamerDbContext(options);
+            streamerDbContextFake.Database.EnsureDeleted();
+
+            var mockUnitOfWork = new Mock<UnitOfWork>(streamerDbContextFake);
+
+
             return mockUnitOfWork;
         }
     }
