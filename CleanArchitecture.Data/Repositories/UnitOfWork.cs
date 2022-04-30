@@ -25,7 +25,14 @@ namespace CleanArchitecture.Infraestructure.Repositories
 
         public async Task<int> Complete()
         {
-            return await _context.SaveChangesAsync();
+            try
+            {
+                return await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Err");
+            }
         }
 
         public void Dispose()
